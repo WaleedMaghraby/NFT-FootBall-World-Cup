@@ -8,7 +8,7 @@
 
 ### Initial Metadata example
 
-´´´
+```
 {
   "name": "Country Flags",
   "description": "Flags of countries",
@@ -17,7 +17,7 @@
     {"trait_type": "Guess", "value": "Brazil" }
   ]
 }
-´´´
+```
 
 ### Update Winners
 
@@ -25,7 +25,7 @@ Create a smart contract which will check a Chainlink oracle and update the NFTs.
 
 ### Final Metadata
 
-´´´
+```
 {
   "name": "Country Flags",
   "description": "Flags of countries",
@@ -36,5 +36,7 @@ Create a smart contract which will check a Chainlink oracle and update the NFTs.
     {"trait_type": "Result", "value": "Congrats! You are a winner"}
   ]
 }
-´´´
+```
+
+
 
