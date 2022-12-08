@@ -38,7 +38,6 @@ contract FWC2022NFT is ERC721, ERC721URIStorage {
         finisher = msg.sender;
         closed = false;
         initializeCountries();
-        safeMint(msg.sender,1);
     }
 
     function initializeCountries() internal {
