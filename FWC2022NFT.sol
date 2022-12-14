@@ -23,7 +23,8 @@ contract FWC2022NFT is ERC721, ERC721URIStorage {
         string image;
         string name;
     }
-    Country[] public countries; 
+    Country[] public countries;
+    mapping(string => uint) public countryIndex;
 
     struct Guess {
         uint8 index;
@@ -63,12 +64,18 @@ contract FWC2022NFT is ERC721, ERC721URIStorage {
         ];
         for (uint i=0; i<countryFlags.length; i++) {
             countries.push(Country(countryFlags[i], countryNames[i]));
+            countryIndex[countryNames[i]] = i;
         }
     }
 
     function listCountries() public view returns (Country[] memory) {
         return countries;
     }
+
+    function countTokens() public view returns (uint) {
+        return tokenIdCounter.current();
+    }
+
 
     function safeMint(address to, uint8 countryId) public notClosed {        
         require( (countryId >= 0) && (countryId < countries.length), "invalid countryId");
@@ -103,7 +110,7 @@ contract FWC2022NFT is ERC721, ERC721URIStorage {
         _setTokenURI(tokenId, finalTokenURI);
     }
 
-    function updateWinner (uint tokenId, uint8 countryId) public notFinished {                
+    function updateWinner (uint tokenId, uint8 countryId) public notFinished onlyUpdater {                
         require( (countryId >= 0) && (countryId < countries.length), "invalid countryId");
         require( tokenId < tokenIdCounter.current(), "invalid tokenId");
 
@@ -141,7 +148,7 @@ contract FWC2022NFT is ERC721, ERC721URIStorage {
         _setTokenURI(tokenId, finalTokenURI);
     }
 
-    function updateWinnerRange (uint start, uint end, uint8 countryId) public notFinished {
+    function updateWinnerRange (uint start, uint end, uint8 countryId) public notFinished onlyUpdater{
         uint tokenLimitId = tokenIdCounter.current();
         require (start < tokenLimitId, "start out of range");
         require (end < tokenLimitId, "end out of range");
